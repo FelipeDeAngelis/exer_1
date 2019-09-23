@@ -7,16 +7,20 @@ mongoose.connect(conn.url);
 autoIncrement.initialize(mongoose);
 
 const ToolSchema = new mongoose.Schema({
-  title: {
+  disc: {
     type: String,
     required: true
   },
-  link: {
+  prof: {
     type: String,
     required: true
   },
-  description: {
+  depar: {
     type: String,
+    required: true
+  },
+  cod: {
+    type: Number,
     required: true
   },
   tags: [String]

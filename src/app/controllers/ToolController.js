@@ -19,9 +19,9 @@ class ToolController {
 
   // POST
   async store(req, res) {
-    const { title } = req.body;
+    const { cod } = req.body;
 
-    const verification = await Tool.findOne({ title });
+    const verification = await Tool.findOne({ cod });
 
     if (verification) {
       return res.status(400).json({ message: "Tool already exists" });
@@ -46,12 +46,11 @@ class ToolController {
     const toolToUpdate = await Tool.findOne({
       _id: req.params.id
     });
-
     if (!toolToUpdate) {
       return res.status(400).json({ error: "Tool requested doest exists." });
     }
 
-    const tool = await Tool.update(req.body);
+    const tool = await toolToUpdate.update(req.body);
 
     return res.status(201).json({ message: "Tool has been modified." });
   }
