@@ -22,8 +22,7 @@ const ToolSchema = new mongoose.Schema({
   cod: {
     type: Number,
     required: true
-  },
-  tags: [String]
+  }
 },
   {
     versionKey: false

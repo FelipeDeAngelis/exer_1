@@ -24,7 +24,7 @@ class ToolController {
     const verification = await Tool.findOne({ cod });
 
     if (verification) {
-      return res.status(400).json({ message: "Tool already exists" });
+      return res.status(400).json({ message: "Código da disciplina ja existe!" });
     }
     try {
       const tool = await Tool.create(req.body);
@@ -32,7 +32,7 @@ class ToolController {
       if (!tool) {
         return res
           .status(400)
-          .json({ message: "Title, link, description and tags are required" });
+          .json({ message: "Código, nome, professor, departamento são necessários." });
       }
 
       return res.status(201).json({ tool });
@@ -46,13 +46,18 @@ class ToolController {
     const toolToUpdate = await Tool.findOne({
       _id: req.params.id
     });
-    if (!toolToUpdate) {
-      return res.status(400).json({ error: "Tool requested doest exists." });
+
+    const { cod } = req.body;
+
+    const verification = toolToUpdate.cod;
+   
+    if (verification != cod) {
+      return res.status(400).json({ error: "Código da disciplina ou ID incorreto." });
     }
 
     const tool = await toolToUpdate.update(req.body);
 
-    return res.status(201).json({ message: "Tool has been modified." });
+    return res.status(201).json({ message: "Parabéns! Atualizado com sucesso..." });
   }
 
   // DELETE
@@ -61,13 +66,17 @@ class ToolController {
       _id: req.params.id
     });
 
-    if (!toolToDelete) {
-      return res.status(400).json({ error: "Tool dont exists." });
+    const { cod } = req.body;
+
+    const verification = toolToDelete.cod;
+
+    if (verification != cod) {
+      return res.status(400).json({ error: "Código da disciplina ou ID incorreto." });
     }
 
     const result = await Tool.deleteOne({ _id: req.params.id });
 
-    return res.status(204).json({ message: "Tool has been deleted." });
+    return res.status(204).json({ message: "Disciplina deletada com sucesso!" });
   }
 }
 
